@@ -1,0 +1,23 @@
+{
+  "name": "super-duper-reblog-mecha",
+  "version": "1.0.0",
+  "description": "",
+  "main": "scrape.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/asonas/super-duper-reblog-mecha.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/asonas/super-duper-reblog-mecha/issues"
+  },
+  "homepage": "https://github.com/asonas/super-duper-reblog-mecha#readme",
+  "dependencies": {
+    "puppeteer": "^19.2.2",
+    "yargs": "^17.6.2"
+  }
+}
