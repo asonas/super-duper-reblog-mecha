@@ -1,3 +1,7 @@
 ---
 :concurrency: 1
 :logfile: ./logs/sidekiq.log
+:schedule:
+  reblog_job:
+    every: '20m'
+    class: ReblogJob
