@@ -1,4 +1,25 @@
 GIT
+  remote: https://github.com/mperham/sidekiq.git
+  revision: e64e359c906cfc56bee8a6e17df686aec5e3bc7d
+  branch: main
+  specs:
+    sidekiq (7.0.1)
+      concurrent-ruby (< 2)
+      connection_pool (>= 2.3.0)
+      rack (>= 2.2.4)
+      redis-client (>= 0.9.0)
+
+GIT
+  remote: https://github.com/sidekiq-scheduler/sidekiq-scheduler.git
+  revision: 76573dbc46c73afa213331049cfc5657582dc376
+  branch: master
+  specs:
+    sidekiq-scheduler (4.0.3)
+      rufus-scheduler (~> 3.2)
+      sidekiq (>= 4, < 8)
+      tilt (>= 1.4.0)
+
+GIT
   remote: https://github.com/tumblr/tumblr_client.git
   revision: a72b7f4636cb0ea75cb65ce90df902c3cb7d96b7
   tag: v0.8.6
@@ -16,6 +37,7 @@ GEM
   specs:
     concurrent-ruby (1.1.10)
     connection_pool (2.3.0)
+    dotenv (2.8.1)
     et-orbi (1.2.7)
       tzinfo
     faraday (1.10.2)
@@ -81,16 +103,6 @@ GEM
     ruby2_keywords (0.0.5)
     rufus-scheduler (3.8.2)
       fugit (~> 1.1, >= 1.1.6)
-    sidekiq (7.0.1)
-      concurrent-ruby (< 2)
-      connection_pool (>= 2.3.0)
-      rack (>= 2.2.4)
-      redis-client (>= 0.9.0)
-    sidekiq-scheduler (4.0.2)
-      redis (>= 4.2.0)
-      rufus-scheduler (~> 3.2)
-      sidekiq (>= 4)
-      tilt (>= 1.4.0)
     simple_oauth (0.3.1)
     sinatra (3.0.3)
       mustermann (~> 3.0)
@@ -112,11 +124,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  dotenv
   puma
+  redis
   rinku
   ruby-lsp (~> 0.3.6)
-  sidekiq
-  sidekiq-scheduler
+  sidekiq!
+  sidekiq-scheduler!
   sinatra
   tumblr_client!
 

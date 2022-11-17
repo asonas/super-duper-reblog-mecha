@@ -1,8 +1,11 @@
 require 'json'
-require 'sidekiq'
+require 'sidekiq-scheduler'
 require 'tumblr_client'
 require 'fileutils'
 require 'rinku'
+
+require 'dotenv'
+Dotenv.load('credentials/tumblr')
 
 Tumblr.configure do |config|
   config.consumer_key = ENV["TUMBLR_CONSUMER_KEY"]
@@ -11,14 +14,24 @@ Tumblr.configure do |config|
   config.oauth_token_secret = ENV["TUMBLR_OAUTH_TOKEN_SECRET"]
 end
 
+class RateLimitError < StandardError
+end
+
 class ReblogJob
   include Sidekiq::Job
-  sidekiq_options retry: 0, log_level: :debug
+  sidekiq_options log_level: :info
+  sidekiq_retry_in do |count, execption|
+    case execption
+    when RateLimitError
+      86400 # 1 day
+    end
+  end
 
-  def perform(url)
+  def perform(url=nil)
+    puts "URL: #{url}"
+    return nil if url.nil? # FIXME sidekiq-scheduler
     json = `node scrape.js tweet #{url}`
     Reblog.new(url, json).reblog
-    sleep 15 #FIXME
   end
 end
 
@@ -47,6 +60,12 @@ class Reblog
       }
     )
     puts res
+    if res["state"] == "published"
+      # success
+    else
+      puts res
+      raise RateLimitError
+    end
   end
 
   def detect_media

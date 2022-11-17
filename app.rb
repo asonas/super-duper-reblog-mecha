@@ -1,7 +1,13 @@
-require 'sinatra'
+require 'sinatra/base'
 require './reblog_job'
 
-post '/queue' do
-  url = params[:url]
-  ReblogJob.perform_async(url)
+class EnqueueApp < Sinatra::Base
+  post '/queue' do
+    url = params[:url]
+    if url.blank?
+      puts "error"
+    else
+      ReblogJob.perform_async(url)
+    end
+  end
 end
