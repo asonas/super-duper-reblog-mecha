@@ -13,6 +13,9 @@ Tumblr.configure do |config|
   config.oauth_token = ENV["TUMBLR_OAUTH_TOKEN"]
   config.oauth_token_secret = ENV["TUMBLR_OAUTH_TOKEN_SECRET"]
 end
+Sidekiq.configure_server do |config|
+  config.redis = { url: 'redis://localhost:6379', namespace: 'sidekiq_reblogger' }
+end
 
 class RateLimitError < StandardError
 end
