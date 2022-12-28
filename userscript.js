@@ -15,11 +15,12 @@
   window.onkeydown = function(event) {
     if(event.key === ';') {
       var element = document.querySelector("article[data-focusvisible-polyfill=true]");
+      console.log(element)
       if (element != null) {
-
-      var tweetUrl = element.querySelector("a[dir=auto]").href
-      var url = "http://10.0.2.200:9292/queue?url=" + tweetUrl;
-      console.log(url)
+        console.log(element.querySelectorAll("a")[3].href)
+        var tweetUrl = element.querySelectorAll("a")[3].href
+        var url = "http://10.0.2.200:9200/queue?url=" + tweetUrl;
+        console.log(url)
 
         GM_xmlhttpRequest({
           method: "POST",
@@ -27,8 +28,8 @@
           onload: response => {
             const html = response.responseText;
             console.log(html);
-        },
-      })
+          },
+        })
       }
     }
   };
